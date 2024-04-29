@@ -1,43 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-function NumberGuesser() {
-    const [guess, setGuess] = useState('');
-    const [target, setTarget] = useState(Math.floor(Math.random() * 101));
+function GuessNumber() {
 
-    const handleGuess = () => {
-      const integer = parseInt(guess);
-      
-        if (!isNaN(integer)) {
-            if (integer === target){
-              alert('Congratulations, you got the right number');
-              setTarget(Math.floor(Math.random() * 101))
-            }
-              else {
-              alert("Try again");
-            }
-          } else {
-            alert("Please enter a valid number");
-        }
-        setGuess('');
+  const [number, setNumber] = useState((Math.floor(Math.random() * 100) + 1));
+  const [guess, setGuess] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleGuess = () => {
+    const userGuess = parseInt(guess)
+
+    if(isNaN(userGuess)) {
+      setMessage("Please enter a Valid number");
     }
+      else if( userGuess < number) {
+        setMessage("Number lower than expected")
+      }
+      else if( userGuess > number ) {
+        setMessage("Number higher than expected")
+      }
+      else {
+        setMessage("Congratulations, you got the correct number");
+      }
 
-    return (
-      <div>
-        <p>Please enter a number between 1 to 100</p>
-        <input 
-        type = 'number'
-        value = {guess}
-        onChange = {(e) => setGuess(e.target.value)}>
-        </input>
+      setGuess('');
+     
 
-        <button onClick = {handleGuess}>Submit</button>
-        
-        
     
-        
-      </div>
-    )
+  }
+
+  return (
+    <div>
+      <input 
+      type = "text"
+      value = {guess}
+      onChange = {(e) => setGuess(e.target.value)}
+      placeholder = "Enter between 1 and 100">
+
+      </input>
+      <button onClick = {handleGuess}>Generate</button>
+
+      <p>{message}</p>
+    </div>
+  )
+
+
 }
 
-export default NumberGuesser;
-
+export default GuessNumber
